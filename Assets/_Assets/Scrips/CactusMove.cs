@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CactusMove : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    private float speed = 16f;
     private void Update()
     {
       Move();

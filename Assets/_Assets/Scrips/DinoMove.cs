@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class DinoMove : MonoBehaviour
 {
+    private Animator anim;
     public float jumpPower = 22f;
     private new Rigidbody2D rigidbody;
     public bool isGround;
 
     
     private void Awake()
-    {
+    {   
+        anim = GetComponent<Animator>();
         isGround = true;
         Time.timeScale = 0;
         rigidbody = GetComponent<Rigidbody2D>();
@@ -27,7 +29,13 @@ public class DinoMove : MonoBehaviour
             rigidbody.velocity = Vector2.up * jumpPower;
             isGround = false;
         }
+        else if (Input.GetKeyDown(KeyCode.Mouse1) && isGround) 
+        {
+            anim.SetTrigger("dino");
+        }
+
         GameCrtl.instance.Score();
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

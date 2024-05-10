@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameCrtl : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI touchToStart;
     [SerializeField] private DinoMove dinoMove;
     private const string HighScoreKey = "High Score";
     [SerializeField] private TextMeshProUGUI textMeshPro;
@@ -13,7 +14,7 @@ public class GameCrtl : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI highScore;
     private float scoref;
-    private float highScoref = 0;
+    private float highScoref ;
     private float time;
 
 
@@ -24,6 +25,7 @@ public class GameCrtl : MonoBehaviour
     }
     public void StartGameDino()
     {   
+        touchToStart.enabled = false;
         Time.timeScale = 1f;
     }
     public void GameOver()
@@ -31,7 +33,7 @@ public class GameCrtl : MonoBehaviour
         Time.timeScale = 0;
         textMeshPro.gameObject.SetActive(true);
         gameStart.gameObject.SetActive(true);
-        dinoMove.isGround = false;
+        dinoMove.onAir = true;
       
     }
 

@@ -13,7 +13,7 @@ public class DinoMove : MonoBehaviour
     private new Rigidbody2D rigidbody;
     public bool isGround;
     public bool onAir;
-
+    public static bool fix; 
     
     private void Awake()
     {   
@@ -21,22 +21,22 @@ public class DinoMove : MonoBehaviour
         boxDown.enabled = false;
         onAir = false;
         anim = GetComponent<Animator>();
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.Mouse0) && !onAir)
+        if (Input.GetKey(KeyCode.RightShift) && !onAir)
         {
-          
+            fix = true;
             GameCrtl.instance.StartGameDino();
             rigidbody.velocity = Vector2.up * jumpPower;
             onAir = true;
 
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) && fix == true)
         {   
             anim.SetTrigger("dino");
             anim.SetTrigger("dino");

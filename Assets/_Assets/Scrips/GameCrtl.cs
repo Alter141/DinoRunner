@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameCrtl : MonoBehaviour
 {
+    [SerializeField] private Button SoundOn;
+    [SerializeField] private Button SoundOff;
+    [SerializeField] private Button MenuPause;
+    [SerializeField] private TextMeshProUGUI pause;
+    [SerializeField] private Button continueGame;
     [SerializeField] private TextMeshProUGUI touchToStart;
     [SerializeField] private DinoMove dinoMove;
     private const string HighScoreKey = "High Score";
@@ -28,14 +33,15 @@ public class GameCrtl : MonoBehaviour
         touchToStart.enabled = false;
         Time.timeScale = 1f;
     }
+
     public void GameOver()
     {
         Time.timeScale = 0;
         textMeshPro.gameObject.SetActive(true);
         gameStart.gameObject.SetActive(true);
         dinoMove.onAir = true;
-      
-    }
+        MenuPause.gameObject.SetActive(false);
+    }   
 
     private void Start()
     {
@@ -65,4 +71,30 @@ public class GameCrtl : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        pause.gameObject.SetActive(true);
+        continueGame.gameObject.SetActive(true);
+        DinoMove.fix = false;
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+        pause.gameObject.SetActive(false);
+        continueGame.gameObject.SetActive(false);
+    }
+
+    public void ShowIconSound()
+    {
+        SoundOn.gameObject.SetActive(true);
+        SoundOff.gameObject.SetActive(false);
+    }
+
+    public void ShowIconSoundOff()
+    {
+        SoundOff.gameObject.SetActive(true);
+        SoundOn.gameObject.SetActive(false);
+    }
 }

@@ -21,7 +21,7 @@ public class GameCrtl : MonoBehaviour
     private float scoref;
     private float highScoref ;
     private float time;
-
+    private float checkTime;
 
     public static GameCrtl instance;
     private void Awake()
@@ -44,22 +44,39 @@ public class GameCrtl : MonoBehaviour
     }   
 
     private void Start()
-    {
+    {   
         highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
-        highScore.text = Mathf.RoundToInt(highScoref).ToString("D5");
+        highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
     }
 
+    private void Update()
+    {
+        checkTime += Time.deltaTime;
+
+        if(CactusMove.speed <= 21)
+        {
+            if (checkTime >= 60)
+            {
+                BirdFly.speed += 0.5f;
+                CactusMove.speed += 0.5f;
+                checkTime = 0;
+            }
+        }
+     
+    }
     public void GameRestart()
     {
         SaveHighScore();
         SceneManager.LoadScene("DinoJump");
+        CactusMove.speed = 16f;
+        Time.timeScale = 0;
     }
 
     public void Score()
     {   
         time += Time.deltaTime;
         scoref += time * Time.deltaTime;
-        score.text = Mathf.RoundToInt(scoref).ToString("D5");
+        score.text = Mathf.RoundToInt(scoref).ToString("D6");
     }
 
     public void SaveHighScore()

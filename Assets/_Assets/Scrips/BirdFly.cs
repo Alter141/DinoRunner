@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BirdFly : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    public static float speed = 16f;
     private void Update()
     {
         Move();

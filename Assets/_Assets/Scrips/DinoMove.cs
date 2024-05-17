@@ -17,8 +17,8 @@ public class DinoMove : MonoBehaviour
     
     private void Awake()
     {   
-        boxUp.enabled = true;
-        boxDown.enabled = false;
+        fix = false;
+        
         onAir = false;
         anim = GetComponent<Animator>();
         Time.timeScale = 0f;
@@ -28,7 +28,7 @@ public class DinoMove : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.RightShift) && !onAir)
+        if (Input.GetKey(KeyCode.J) && !onAir)
         {
             fix = true;
             GameCrtl.instance.StartGameDino();
@@ -37,7 +37,8 @@ public class DinoMove : MonoBehaviour
 
         }
         else if (Input.GetKeyDown(KeyCode.Space) && fix == true)
-        {   
+        {
+
             anim.SetTrigger("dino");
             anim.SetTrigger("dino");
             rigidbody.velocity = Vector2.down * jumpPower;

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class CactusMove : MonoBehaviour
 {
-    private float speed = 16f;
+    public static float speed = 16f;
+
+
+    
     private void Update()
     {
-      Move();
+        Move();
     }
 
     public void Move()
@@ -18,8 +21,13 @@ public class CactusMove : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Dino")
-        {   
+        {
             GameCrtl.instance.GameOver();
         }
+    }
+
+    public void IncreaseSpeed()
+    {
+        speed += 5;
     }
 }

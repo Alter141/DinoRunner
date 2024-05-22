@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class DinoMove : MonoBehaviour
 {
-    [SerializeField] private BoxCollider2D boxUp;
-    [SerializeField] private BoxCollider2D boxDown;
     private Animator anim;
     public float jumpPower = 22f;
     private new Rigidbody2D rigidbody;
@@ -18,7 +16,6 @@ public class DinoMove : MonoBehaviour
     private void Awake()
     {   
         fix = false;
-        
         onAir = false;
         anim = GetComponent<Animator>();
         Time.timeScale = 0f;
@@ -38,8 +35,6 @@ public class DinoMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && fix == true)
         {
-
-            anim.SetTrigger("dino");
             anim.SetTrigger("dino");
             rigidbody.velocity = Vector2.down * jumpPower;
         }

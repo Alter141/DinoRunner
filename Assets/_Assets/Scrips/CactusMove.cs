@@ -5,9 +5,6 @@ using UnityEngine;
 public class CactusMove : MonoBehaviour
 {
     public static float speed = 16f;
-
-
-    
     private void Update()
     {
         Move();

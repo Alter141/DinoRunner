@@ -29,7 +29,7 @@ public class SpawnCactus : MonoBehaviour
         int ran = Random.Range(0, spawnedObjects.Count);
         if(ran == 9|| ran == 8) 
         {
-             cactusSpawn = Instantiate(spawnedObjects[ran], new Vector3(20f,Random.Range(-2.2f, 1f), 0), Quaternion.identity);
+             cactusSpawn = Instantiate(spawnedObjects[ran], new Vector3(20f,Random.Range(-2.5f, 1.5f), 0), Quaternion.identity);
         }
         else
         {

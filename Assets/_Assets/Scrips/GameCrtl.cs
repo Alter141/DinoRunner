@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,12 +25,16 @@ public class GameCrtl : MonoBehaviour
     private float checkTime;
 
     public static GameCrtl instance;
+
+  
     private void Awake()
     {   
         instance = this;
     }
+
     public void StartGameDino()
-    {   
+    {
+        MenuPause.gameObject.SetActive(true);
         touchToStart.enabled = false;
         Time.timeScale = 1f;
     }
@@ -44,7 +49,8 @@ public class GameCrtl : MonoBehaviour
     }   
 
     private void Start()
-    {   
+    {
+        
         highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
         highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
     }

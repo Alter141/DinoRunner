@@ -23,15 +23,21 @@ public class GameCrtl : MonoBehaviour
     private float highScoref ;
     private float time;
     private float checkTime;
-
+    private int gamePlayed;
     public static GameCrtl instance;
 
   
     private void Awake()
     {   
         instance = this;
+        StartCoroutine(DisplayBannerWithDelay());
     }
 
+    private IEnumerator DisplayBannerWithDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        AdsManager.Instance.bannerAds.ShowBannerAds();
+    }
     public void StartGameDino()
     {
         MenuPause.gameObject.SetActive(true);
@@ -46,19 +52,23 @@ public class GameCrtl : MonoBehaviour
         gameStart.gameObject.SetActive(true);
         dinoMove.onAir = true;
         MenuPause.gameObject.SetActive(false);
+        
+        if (gamePlayed % 3 == 0)
+        {
+            AdsManager.Instance.interstitialAds.ShowInterstitialAds();
+        }
     }   
 
     private void Start()
     {
-        
+        gamePlayed = PlayerPrefs.GetInt("GamePlayed", 1);   
         highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
         highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
     }
 
     private void Update()
-    {
+    {   
         checkTime += Time.deltaTime;
-
         if(CactusMove.speed <= 21)
         {
             if (checkTime >= 60)
@@ -68,7 +78,6 @@ public class GameCrtl : MonoBehaviour
                 checkTime = 0;
             }
         }
-     
     }
     public void GameRestart()
     {
@@ -76,6 +85,8 @@ public class GameCrtl : MonoBehaviour
         SceneManager.LoadScene("DinoJump");
         CactusMove.speed = 16f;
         Time.timeScale = 0;
+        gamePlayed++;   
+        PlayerPrefs.SetInt("GamePlayed", gamePlayed);
     }
 
     public void Score()
@@ -84,7 +95,8 @@ public class GameCrtl : MonoBehaviour
         scoref += time * Time.deltaTime;
         score.text = Mathf.RoundToInt(scoref).ToString("D6");
     }
-
+    
+    
     public void SaveHighScore()
     {
         if (scoref > highScoref)

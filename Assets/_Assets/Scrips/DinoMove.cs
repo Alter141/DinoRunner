@@ -24,25 +24,22 @@ public class DinoMove : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0); 
-            Vector2 touchPosition = touch.position;
+     
 
-            if (touchPosition.x < Screen.width / 2 && !onAir)
+            if (Input.GetKey(KeyCode.J) && !onAir)
             {
-                fix = true;
-                GameCrtl.instance.StartGameDino();
-                rigidbody.velocity = Vector2.up * jumpPower;
-                onAir = true;
+                //fix = true;
+                //GameCrtl.instance.StartGameDino();
+                //rigidbody.velocity = Vector2.up * jumpPower;
+                //onAir = true;
             }
 
-            else if (touchPosition.x >= Screen.width / 2 && fix == true && touch.phase == TouchPhase.Began)
+            else if (Input.GetKeyDown(KeyCode.Space) && fix == true)
             {
-                anim.SetTrigger("dino");
-                rigidbody.velocity = Vector2.down * jumpPower;
+                //anim.SetTrigger("dino");
+                //rigidbody.velocity = Vector2.down * jumpPower;
             }
-        }
+        
         else
         {
             isGround = true;
@@ -58,6 +55,26 @@ public class DinoMove : MonoBehaviour
         {
             onAir = false;
             isGround = true;
+        }
+    }
+
+    public void jump()
+    {
+        if(!onAir)
+        {
+            fix = true;
+            GameCrtl.instance.StartGameDino();
+            rigidbody.velocity = Vector2.up * jumpPower;
+            onAir = true;
+        }
+    }
+
+    public void down()
+    {
+        if(fix == true)
+        {
+            anim.SetTrigger("dino");
+            rigidbody.velocity = Vector2.down * jumpPower;
         }
     }
 } 

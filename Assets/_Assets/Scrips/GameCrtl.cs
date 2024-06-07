@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameCrtl : MonoBehaviour
 {
+    [SerializeField] private Button buttonRight;
+    [SerializeField] private Button buttonLeft;
     [SerializeField] private Button pauseGame;
     [SerializeField] private Button SoundOn;
     [SerializeField] private Button SoundOff;
@@ -40,7 +42,8 @@ public class GameCrtl : MonoBehaviour
         AdsManager.Instance.bannerAds.ShowBannerAds();
     }
     public void StartGameDino()
-    {
+    {   
+        pauseGame.gameObject.SetActive(true);
         MenuPause.gameObject.SetActive(true);
         touchToStart.enabled = false;
         Time.timeScale = 1f;
@@ -48,12 +51,16 @@ public class GameCrtl : MonoBehaviour
 
     public void GameOver()
     {
+        pauseGame.gameObject.SetActive(true);
         Time.timeScale = 0;
         textMeshPro.gameObject.SetActive(true);
         gameStart.gameObject.SetActive(true);
         dinoMove.onAir = true;
         MenuPause.gameObject.SetActive(false);
-        
+        buttonLeft.gameObject.SetActive(false);
+        buttonRight.gameObject.SetActive(false);
+
+
         if (gamePlayed % 3 == 0)
         {
             AdsManager.Instance.interstitialAds.ShowInterstitialAds();

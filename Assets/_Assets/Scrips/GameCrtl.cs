@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameCrtl : MonoBehaviour
 {
+    [SerializeField] private Button pauseGame;
     [SerializeField] private Button SoundOn;
     [SerializeField] private Button SoundOff;
     [SerializeField] private Button MenuPause;

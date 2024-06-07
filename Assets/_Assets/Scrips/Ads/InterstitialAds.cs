@@ -28,7 +28,7 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
    public void OnUnityAdsAdLoaded(string placementId)
    {
-      Debug.Log("InterstititalAds");
+
    }
 
    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
@@ -53,6 +53,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
    {
-      Debug.Log("Interstitial Ads Completed");
+
    }
 }

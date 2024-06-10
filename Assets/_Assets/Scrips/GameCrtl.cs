@@ -46,7 +46,19 @@ public class GameCrtl : MonoBehaviour
         SignIn();
     }
 
- 
+    internal void SignIn()
+    {
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+    }
+
+    internal void ProcessAuthentication(SignInStatus status)
+    {
+        if (status == SignInStatus.Success) { Debug.Log("Login SUCCESS"); }
+
+        else { Debug.Log("Login FAIL"); }
+
+    }
+
     private void LeaderboardUpdate(bool succes)
     {
         if(succes) Debug.Log("Update LeaderBoard");
@@ -69,23 +81,6 @@ public class GameCrtl : MonoBehaviour
         // if(!connectToGooglePlay) LogInToGooglePlay();
         Social.ShowLeaderboardUI();
     }
-
-    internal void SignIn()
-    {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-    }
-
-    internal void ProcessAuthentication(SignInStatus status)
-    {
-        if (status == SignInStatus.Success)
-        {
-            Debug.Log("Log in SUCCESS");
-        }
-        else
-        {
-            Debug.Log("Log in FAIL");
-        }
-    }
     
     private IEnumerator DisplayBannerWithDelay()
     {
@@ -94,7 +89,6 @@ public class GameCrtl : MonoBehaviour
     }
     public void StartGameDino()
     {   
-        
         MenuPause.gameObject.SetActive(true);
         Time.timeScale = 1f;
     }
@@ -194,5 +188,4 @@ public class GameCrtl : MonoBehaviour
         pauseGame.gameObject.SetActive(true);
     }
     
-
 }

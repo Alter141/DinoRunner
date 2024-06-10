@@ -24,8 +24,6 @@ public class DinoMove : MonoBehaviour
 
     private void Update()
     {
-     
-
             if (Input.GetKey(KeyCode.J) && !onAir)
             {
                 //fix = true;

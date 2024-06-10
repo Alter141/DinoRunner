@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+
 public class GameCrtl : MonoBehaviour
 {
     [SerializeField] private Button buttonRight;
     [SerializeField] private Button buttonLeft;
+    [SerializeField] private Button buttonStart;
     [SerializeField] private Button pauseGame;
     [SerializeField] private Button SoundOn;
     [SerializeField] private Button SoundOff;
@@ -28,14 +33,60 @@ public class GameCrtl : MonoBehaviour
     private float checkTime;
     private int gamePlayed;
     public static GameCrtl instance;
-
-  
+    
+    public bool connectToGooglePlay;
+    
     private void Awake()
     {   
         instance = this;
         StartCoroutine(DisplayBannerWithDelay());
+        
+        PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.Activate();
+        SignIn();
     }
 
+ 
+    private void LeaderboardUpdate(bool succes)
+    {
+        if(succes) Debug.Log("Update LeaderBoard");
+        else Debug.Log("Unable to update leaderboard");
+    }
+    public void GameRestart()
+    {
+        SaveHighScore();
+        SceneManager.LoadScene("DinoJump");
+        CactusMove.speed = 16f;
+        Time.timeScale = 0;
+        gamePlayed++;   
+        PlayerPrefs.SetInt("GamePlayed", gamePlayed);
+        
+        Social.ReportScore((long)highScoref, GPGSIds.leaderboard_dinorunner, LeaderboardUpdate);    
+    }
+    
+    public void ShowLeaderBoard()
+    {
+        // if(!connectToGooglePlay) LogInToGooglePlay();
+        Social.ShowLeaderboardUI();
+    }
+
+    internal void SignIn()
+    {
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+    }
+
+    internal void ProcessAuthentication(SignInStatus status)
+    {
+        if (status == SignInStatus.Success)
+        {
+            Debug.Log("Log in SUCCESS");
+        }
+        else
+        {
+            Debug.Log("Log in FAIL");
+        }
+    }
+    
     private IEnumerator DisplayBannerWithDelay()
     {
         yield return new WaitForSeconds(1f);
@@ -43,9 +94,8 @@ public class GameCrtl : MonoBehaviour
     }
     public void StartGameDino()
     {   
-        pauseGame.gameObject.SetActive(true);
+        
         MenuPause.gameObject.SetActive(true);
-        touchToStart.enabled = false;
         Time.timeScale = 1f;
     }
 
@@ -59,7 +109,7 @@ public class GameCrtl : MonoBehaviour
         MenuPause.gameObject.SetActive(false);
         buttonLeft.gameObject.SetActive(false);
         buttonRight.gameObject.SetActive(false);
-
+        
 
         if (gamePlayed % 3 == 0)
         {
@@ -72,6 +122,7 @@ public class GameCrtl : MonoBehaviour
         gamePlayed = PlayerPrefs.GetInt("GamePlayed", 1);   
         highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
         highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
+
     }
 
     private void Update()
@@ -87,23 +138,13 @@ public class GameCrtl : MonoBehaviour
             }
         }
     }
-    public void GameRestart()
-    {
-        SaveHighScore();
-        SceneManager.LoadScene("DinoJump");
-        CactusMove.speed = 16f;
-        Time.timeScale = 0;
-        gamePlayed++;   
-        PlayerPrefs.SetInt("GamePlayed", gamePlayed);
-    }
-
+    
     public void Score()
     {   
         time += Time.deltaTime;
         scoref += time * Time.deltaTime;
         score.text = Mathf.RoundToInt(scoref).ToString("D6");
     }
-    
     
     public void SaveHighScore()
     {
@@ -120,6 +161,8 @@ public class GameCrtl : MonoBehaviour
         pause.gameObject.SetActive(true);
         continueGame.gameObject.SetActive(true);
         DinoMove.fix = false;
+        buttonLeft.gameObject.SetActive(false);
+        buttonRight.gameObject.SetActive(false);
     }
 
     public void ContinueGame()
@@ -127,6 +170,8 @@ public class GameCrtl : MonoBehaviour
         Time.timeScale = 1f;
         pause.gameObject.SetActive(false);
         continueGame.gameObject.SetActive(false);
+        buttonLeft.gameObject.SetActive(true);
+        buttonRight.gameObject.SetActive(true);
     }
 
     public void ShowIconSound()
@@ -140,4 +185,14 @@ public class GameCrtl : MonoBehaviour
         SoundOff.gameObject.SetActive(true);
         SoundOn.gameObject.SetActive(false);
     }
+
+    public void StartGame()
+    {
+        buttonStart.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+        touchToStart.enabled = false;
+        pauseGame.gameObject.SetActive(true);
+    }
+    
+
 }

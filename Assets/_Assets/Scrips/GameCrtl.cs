@@ -105,7 +105,7 @@ public class GameCrtl : MonoBehaviour
         buttonRight.gameObject.SetActive(false);
         
 
-        if (gamePlayed % 3 == 0)
+        if (gamePlayed % 6 == 0)
         {
             AdsManager.Instance.interstitialAds.ShowInterstitialAds();
         }

@@ -46,12 +46,13 @@ public class GameCrtl : MonoBehaviour
         SignIn();
     }
 
-    internal void SignIn()
-    {
+    public void SignIn()
+    {   
+        Debug.Log(("DEBUG IN HERE ===================================================="));
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
-    internal void ProcessAuthentication(SignInStatus status)
+    public void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success) { Debug.Log("Login SUCCESS"); }
 

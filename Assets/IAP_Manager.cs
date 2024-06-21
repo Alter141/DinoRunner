@@ -25,7 +25,7 @@ public class IAP_Manager : MonoBehaviour
    private void Awake()
    {
       purchased = PlayerPrefs.GetInt(isPurchase, 0);
-      checkPurchase();
+      // checkPurchase();
    }
 
    private void Start()
@@ -33,15 +33,15 @@ public class IAP_Manager : MonoBehaviour
    
    }
 
-   public void checkPurchase()
-   {
-      if (purchased == 1)
-      {
-         remove.gameObject.SetActive(false);
-         ads.gameObject.SetActive(false);
-      }
-      else remove.gameObject.SetActive(true);
-   }
+   // public void checkPurchase()
+   // {
+   //    if (purchased == 1)
+   //    {
+   //       remove.gameObject.SetActive(false);
+   //       ads.gameObject.SetActive(false);
+   //    }
+   //    else remove.gameObject.SetActive(true);
+   // }
    
    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureDescription)
    {

@@ -43,7 +43,16 @@ public class GameCrtl : MonoBehaviour
         
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
+
+    }
+    
+    private void Start()
+    {   
         SignIn();
+        gamePlayed = PlayerPrefs.GetInt("GamePlayed", 1);   
+        highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
+        highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
+
     }
 
     public void SignIn()
@@ -112,13 +121,7 @@ public class GameCrtl : MonoBehaviour
         }
     }   
 
-    private void Start()
-    {
-        gamePlayed = PlayerPrefs.GetInt("GamePlayed", 1);   
-        highScoref = PlayerPrefs.GetFloat(HighScoreKey,0);
-        highScore.text = Mathf.RoundToInt(highScoref).ToString("D6");
 
-    }
 
     private void Update()
     {   
